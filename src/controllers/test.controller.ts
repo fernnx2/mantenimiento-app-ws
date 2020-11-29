@@ -1,29 +1,35 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
-  requestBody,
+
+  requestBody
 } from '@loopback/rest';
 import {Test} from '../models';
 import {TestRepository} from '../repositories';
 
+@authenticate('jwt')
 export class TestController {
   constructor(
     @repository(TestRepository)
-    public testRepository : TestRepository,
-  ) {}
+    public testRepository: TestRepository,
+  ) { }
 
   @post('/tests', {
     responses: {
