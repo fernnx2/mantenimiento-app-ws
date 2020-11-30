@@ -57,6 +57,7 @@
     "@loopback/rest-explorer": "^3.0.3",
     "@loopback/service-proxy": "^3.0.3",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "loopback-connector-mongodb": "^5.4.0",
     "tslib": "^2.0.0"
   },
