@@ -1,6 +1,11 @@
-export * from './ping.controller';
-export * from './test.controller';
-export * from './user.controller';
+export * from './area.controller';
+export * from './departamento.controller';
+export * from './equipo.controller';
 export * from './ficha-tecnica.controller';
-export * from './tipo-pem.controller';
+export * from './lugar.controller';
+export * from './ping.controller';
 export * from './plan-pem.controller';
+export * from './test.controller';
+export * from './tipo-pem.controller';
+export * from './user.controller';
+
