@@ -5,7 +5,7 @@ export class Lugar extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 
@@ -25,7 +25,6 @@ export class Lugar extends Entity {
     type: 'string',
   })
   descripcion?: string;
-
 
   constructor(data?: Partial<Lugar>) {
     super(data);

@@ -5,7 +5,7 @@ export class Departamento extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: string;
 
@@ -31,7 +31,6 @@ export class Departamento extends Entity {
     type: 'string',
   })
   descripcion?: string;
-
 
   constructor(data?: Partial<Departamento>) {
     super(data);
