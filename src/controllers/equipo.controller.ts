@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,22 +8,23 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {Equipo} from '../models';
 import {EquipoRepository} from '../repositories';
 
+@authenticate('jwt')
 export class EquipoController {
   constructor(
     @repository(EquipoRepository)
-    public equipoRepository : EquipoRepository,
+    public equipoRepository: EquipoRepository,
   ) {}
 
   @post('/equipos', {
@@ -39,7 +41,6 @@ export class EquipoController {
         'application/json': {
           schema: getModelSchemaRef(Equipo, {
             title: 'NewEquipo',
-            
           }),
         },
       },
@@ -57,9 +58,7 @@ export class EquipoController {
       },
     },
   })
-  async count(
-    @param.where(Equipo) where?: Where<Equipo>,
-  ): Promise<Count> {
+  async count(@param.where(Equipo) where?: Where<Equipo>): Promise<Count> {
     return this.equipoRepository.count(where);
   }
 
@@ -78,9 +77,7 @@ export class EquipoController {
       },
     },
   })
-  async find(
-    @param.filter(Equipo) filter?: Filter<Equipo>,
-  ): Promise<Equipo[]> {
+  async find(@param.filter(Equipo) filter?: Filter<Equipo>): Promise<Equipo[]> {
     return this.equipoRepository.find(filter);
   }
 
@@ -120,7 +117,8 @@ export class EquipoController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Equipo, {exclude: 'where'}) filter?: FilterExcludingWhere<Equipo>
+    @param.filter(Equipo, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Equipo>,
   ): Promise<Equipo> {
     return this.equipoRepository.findById(id, filter);
   }

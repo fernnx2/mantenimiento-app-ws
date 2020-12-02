@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,29 +8,32 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {Departamento} from '../models';
 import {DepartamentoRepository} from '../repositories';
 
+@authenticate('jwt')
 export class DepartamentoController {
   constructor(
     @repository(DepartamentoRepository)
-    public departamentoRepository : DepartamentoRepository,
+    public departamentoRepository: DepartamentoRepository,
   ) {}
 
   @post('/departamentos', {
     responses: {
       '200': {
         description: 'Departamento model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Departamento)}},
+        content: {
+          'application/json': {schema: getModelSchemaRef(Departamento)},
+        },
       },
     },
   })
@@ -39,7 +43,6 @@ export class DepartamentoController {
         'application/json': {
           schema: getModelSchemaRef(Departamento, {
             title: 'NewDepartamento',
-            
           }),
         },
       },
@@ -120,7 +123,8 @@ export class DepartamentoController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Departamento, {exclude: 'where'}) filter?: FilterExcludingWhere<Departamento>
+    @param.filter(Departamento, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Departamento>,
   ): Promise<Departamento> {
     return this.departamentoRepository.findById(id, filter);
   }

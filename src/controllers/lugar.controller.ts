@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,22 +8,23 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {Lugar} from '../models';
 import {LugarRepository} from '../repositories';
 
+@authenticate('jwt')
 export class LugarController {
   constructor(
     @repository(LugarRepository)
-    public lugarRepository : LugarRepository,
+    public lugarRepository: LugarRepository,
   ) {}
 
   @post('/lugares', {
@@ -39,7 +41,6 @@ export class LugarController {
         'application/json': {
           schema: getModelSchemaRef(Lugar, {
             title: 'NewLugar',
-            
           }),
         },
       },
@@ -57,9 +58,7 @@ export class LugarController {
       },
     },
   })
-  async count(
-    @param.where(Lugar) where?: Where<Lugar>,
-  ): Promise<Count> {
+  async count(@param.where(Lugar) where?: Where<Lugar>): Promise<Count> {
     return this.lugarRepository.count(where);
   }
 
@@ -78,9 +77,7 @@ export class LugarController {
       },
     },
   })
-  async find(
-    @param.filter(Lugar) filter?: Filter<Lugar>,
-  ): Promise<Lugar[]> {
+  async find(@param.filter(Lugar) filter?: Filter<Lugar>): Promise<Lugar[]> {
     return this.lugarRepository.find(filter);
   }
 
@@ -120,7 +117,8 @@ export class LugarController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Lugar, {exclude: 'where'}) filter?: FilterExcludingWhere<Lugar>
+    @param.filter(Lugar, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Lugar>,
   ): Promise<Lugar> {
     return this.lugarRepository.findById(id, filter);
   }

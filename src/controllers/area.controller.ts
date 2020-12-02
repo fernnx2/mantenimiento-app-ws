@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,24 +8,26 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {Area} from '../models';
 import {AreaRepository} from '../repositories';
 
+@authenticate('jwt')
 export class AreaController {
   constructor(
     @repository(AreaRepository)
-    public areaRepository : AreaRepository,
+    public areaRepository: AreaRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/areas', {
     responses: {
       '200': {
@@ -39,7 +42,6 @@ export class AreaController {
         'application/json': {
           schema: getModelSchemaRef(Area, {
             title: 'NewArea',
-            
           }),
         },
       },
@@ -57,9 +59,7 @@ export class AreaController {
       },
     },
   })
-  async count(
-    @param.where(Area) where?: Where<Area>,
-  ): Promise<Count> {
+  async count(@param.where(Area) where?: Where<Area>): Promise<Count> {
     return this.areaRepository.count(where);
   }
 
@@ -78,9 +78,7 @@ export class AreaController {
       },
     },
   })
-  async find(
-    @param.filter(Area) filter?: Filter<Area>,
-  ): Promise<Area[]> {
+  async find(@param.filter(Area) filter?: Filter<Area>): Promise<Area[]> {
     return this.areaRepository.find(filter);
   }
 
@@ -120,7 +118,7 @@ export class AreaController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Area, {exclude: 'where'}) filter?: FilterExcludingWhere<Area>
+    @param.filter(Area, {exclude: 'where'}) filter?: FilterExcludingWhere<Area>,
   ): Promise<Area> {
     return this.areaRepository.findById(id, filter);
   }
