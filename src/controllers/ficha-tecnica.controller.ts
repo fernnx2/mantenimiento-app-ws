@@ -1,29 +1,35 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
-  requestBody,
+
+  requestBody
 } from '@loopback/rest';
 import {FichaTecnica} from '../models';
 import {FichaTecnicaRepository} from '../repositories';
 
+@authenticate('jwt')
 export class FichaTecnicaController {
   constructor(
     @repository(FichaTecnicaRepository)
-    public fichaTecnicaRepository : FichaTecnicaRepository,
-  ) {}
+    public fichaTecnicaRepository: FichaTecnicaRepository,
+  ) { }
 
   @post('/ficha-tecnicas', {
     responses: {
@@ -39,7 +45,7 @@ export class FichaTecnicaController {
         'application/json': {
           schema: getModelSchemaRef(FichaTecnica, {
             title: 'NewFichaTecnica',
-            
+
           }),
         },
       },

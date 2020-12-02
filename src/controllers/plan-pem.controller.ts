@@ -1,29 +1,35 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
-  requestBody,
+
+  requestBody
 } from '@loopback/rest';
 import {PlanPem} from '../models';
 import {PlanPemRepository} from '../repositories';
 
+@authenticate('jwt')
 export class PlanPemController {
   constructor(
     @repository(PlanPemRepository)
-    public planPemRepository : PlanPemRepository,
-  ) {}
+    public planPemRepository: PlanPemRepository,
+  ) { }
 
   @post('/plan-pems', {
     responses: {
@@ -39,7 +45,7 @@ export class PlanPemController {
         'application/json': {
           schema: getModelSchemaRef(PlanPem, {
             title: 'NewPlanPem',
-            
+
           }),
         },
       },

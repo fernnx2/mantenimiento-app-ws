@@ -1,29 +1,35 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
-  requestBody,
+
+  requestBody
 } from '@loopback/rest';
 import {TipoPem} from '../models';
 import {TipoPemRepository} from '../repositories';
 
+@authenticate('jwt')
 export class TipoPemController {
   constructor(
     @repository(TipoPemRepository)
-    public tipoPemRepository : TipoPemRepository,
-  ) {}
+    public tipoPemRepository: TipoPemRepository,
+  ) { }
 
   @post('/tipo-pems', {
     responses: {
@@ -39,7 +45,7 @@ export class TipoPemController {
         'application/json': {
           schema: getModelSchemaRef(TipoPem, {
             title: 'NewTipoPem',
-            
+
           }),
         },
       },
