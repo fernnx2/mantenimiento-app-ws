@@ -3,3 +3,4 @@ export * from './area.repository';
 export * from './lugar.repository';
 export * from './departamento.repository';
 export * from './equipo.repository';
+export * from './pem.repository';

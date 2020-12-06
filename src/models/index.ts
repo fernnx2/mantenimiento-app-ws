@@ -3,3 +3,4 @@ export * from './test.model';
 export * from './lugar.model';
 export * from './departamento.model';
 export * from './equipo.model';
+export * from './pem.model';
