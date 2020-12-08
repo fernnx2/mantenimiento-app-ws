@@ -6,3 +6,4 @@ export * from './lugar.controller';
 export * from './departamento.controller';
 export * from './equipo.controller';
 export * from './pem.controller';
+export * from './calendario-auxiliar.controller';
