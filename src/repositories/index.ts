@@ -6,3 +6,4 @@ export * from './equipo.repository';
 export * from './pem.repository';
 export * from './calendario-auxiliar.repository';
 export * from './solicitud-orden-trabajo.repository';
+export * from './orden-trabajo.repository';

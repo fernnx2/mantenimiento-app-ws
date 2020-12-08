@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,22 +8,23 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {Pem} from '../models';
 import {PemRepository} from '../repositories';
 
+@authenticate('jwt')
 export class PemController {
   constructor(
     @repository(PemRepository)
-    public pemRepository : PemRepository,
+    public pemRepository: PemRepository,
   ) {}
 
   @post('/pems', {
@@ -39,7 +41,6 @@ export class PemController {
         'application/json': {
           schema: getModelSchemaRef(Pem, {
             title: 'NewPem',
-            
           }),
         },
       },
@@ -57,9 +58,7 @@ export class PemController {
       },
     },
   })
-  async count(
-    @param.where(Pem) where?: Where<Pem>,
-  ): Promise<Count> {
+  async count(@param.where(Pem) where?: Where<Pem>): Promise<Count> {
     return this.pemRepository.count(where);
   }
 
@@ -78,9 +77,7 @@ export class PemController {
       },
     },
   })
-  async find(
-    @param.filter(Pem) filter?: Filter<Pem>,
-  ): Promise<Pem[]> {
+  async find(@param.filter(Pem) filter?: Filter<Pem>): Promise<Pem[]> {
     return this.pemRepository.find(filter);
   }
 
@@ -120,7 +117,7 @@ export class PemController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Pem, {exclude: 'where'}) filter?: FilterExcludingWhere<Pem>
+    @param.filter(Pem, {exclude: 'where'}) filter?: FilterExcludingWhere<Pem>,
   ): Promise<Pem> {
     return this.pemRepository.findById(id, filter);
   }

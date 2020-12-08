@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,29 +8,32 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {CalendarioAuxiliar} from '../models';
 import {CalendarioAuxiliarRepository} from '../repositories';
 
+@authenticate('jwt')
 export class CalendarioAuxiliarController {
   constructor(
     @repository(CalendarioAuxiliarRepository)
-    public calendarioAuxiliarRepository : CalendarioAuxiliarRepository,
+    public calendarioAuxiliarRepository: CalendarioAuxiliarRepository,
   ) {}
 
   @post('/calendario-auxiliar', {
     responses: {
       '200': {
         description: 'CalendarioAuxiliar model instance',
-        content: {'application/json': {schema: getModelSchemaRef(CalendarioAuxiliar)}},
+        content: {
+          'application/json': {schema: getModelSchemaRef(CalendarioAuxiliar)},
+        },
       },
     },
   })
@@ -39,7 +43,6 @@ export class CalendarioAuxiliarController {
         'application/json': {
           schema: getModelSchemaRef(CalendarioAuxiliar, {
             title: 'NewCalendarioAuxiliar',
-            
           }),
         },
       },
@@ -71,7 +74,9 @@ export class CalendarioAuxiliarController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(CalendarioAuxiliar, {includeRelations: true}),
+              items: getModelSchemaRef(CalendarioAuxiliar, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -103,7 +108,10 @@ export class CalendarioAuxiliarController {
     calendarioAuxiliar: CalendarioAuxiliar,
     @param.where(CalendarioAuxiliar) where?: Where<CalendarioAuxiliar>,
   ): Promise<Count> {
-    return this.calendarioAuxiliarRepository.updateAll(calendarioAuxiliar, where);
+    return this.calendarioAuxiliarRepository.updateAll(
+      calendarioAuxiliar,
+      where,
+    );
   }
 
   @get('/calendario-auxiliar/{id}', {
@@ -112,7 +120,9 @@ export class CalendarioAuxiliarController {
         description: 'CalendarioAuxiliar model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(CalendarioAuxiliar, {includeRelations: true}),
+            schema: getModelSchemaRef(CalendarioAuxiliar, {
+              includeRelations: true,
+            }),
           },
         },
       },
@@ -120,7 +130,8 @@ export class CalendarioAuxiliarController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(CalendarioAuxiliar, {exclude: 'where'}) filter?: FilterExcludingWhere<CalendarioAuxiliar>
+    @param.filter(CalendarioAuxiliar, {exclude: 'where'})
+    filter?: FilterExcludingWhere<CalendarioAuxiliar>,
   ): Promise<CalendarioAuxiliar> {
     return this.calendarioAuxiliarRepository.findById(id, filter);
   }

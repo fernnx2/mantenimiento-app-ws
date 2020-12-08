@@ -8,3 +8,4 @@ export * from './equipo.controller';
 export * from './pem.controller';
 export * from './calendario-auxiliar.controller';
 export * from './solicitud-orden-trabajo.controller';
+export * from './orden-trabajo.controller';

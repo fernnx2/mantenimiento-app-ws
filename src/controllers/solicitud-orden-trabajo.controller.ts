@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,29 +8,34 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
 } from '@loopback/rest';
 import {SolicitudOrdenTrabajo} from '../models';
 import {SolicitudOrdenTrabajoRepository} from '../repositories';
 
+@authenticate('jwt')
 export class SolicitudOrdenTrabajoController {
   constructor(
     @repository(SolicitudOrdenTrabajoRepository)
-    public solicitudOrdenTrabajoRepository : SolicitudOrdenTrabajoRepository,
+    public solicitudOrdenTrabajoRepository: SolicitudOrdenTrabajoRepository,
   ) {}
 
   @post('/solicitudes-ordenes-trabajo', {
     responses: {
       '200': {
         description: 'SolicitudOrdenTrabajo model instance',
-        content: {'application/json': {schema: getModelSchemaRef(SolicitudOrdenTrabajo)}},
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(SolicitudOrdenTrabajo),
+          },
+        },
       },
     },
   })
@@ -39,7 +45,6 @@ export class SolicitudOrdenTrabajoController {
         'application/json': {
           schema: getModelSchemaRef(SolicitudOrdenTrabajo, {
             title: 'NewSolicitudOrdenTrabajo',
-            
           }),
         },
       },
@@ -71,7 +76,9 @@ export class SolicitudOrdenTrabajoController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(SolicitudOrdenTrabajo, {includeRelations: true}),
+              items: getModelSchemaRef(SolicitudOrdenTrabajo, {
+                includeRelations: true,
+              }),
             },
           },
         },
@@ -103,7 +110,10 @@ export class SolicitudOrdenTrabajoController {
     solicitudOrdenTrabajo: SolicitudOrdenTrabajo,
     @param.where(SolicitudOrdenTrabajo) where?: Where<SolicitudOrdenTrabajo>,
   ): Promise<Count> {
-    return this.solicitudOrdenTrabajoRepository.updateAll(solicitudOrdenTrabajo, where);
+    return this.solicitudOrdenTrabajoRepository.updateAll(
+      solicitudOrdenTrabajo,
+      where,
+    );
   }
 
   @get('/solicitudes-ordenes-trabajo/{id}', {
@@ -112,7 +122,9 @@ export class SolicitudOrdenTrabajoController {
         description: 'SolicitudOrdenTrabajo model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(SolicitudOrdenTrabajo, {includeRelations: true}),
+            schema: getModelSchemaRef(SolicitudOrdenTrabajo, {
+              includeRelations: true,
+            }),
           },
         },
       },
@@ -120,7 +132,8 @@ export class SolicitudOrdenTrabajoController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(SolicitudOrdenTrabajo, {exclude: 'where'}) filter?: FilterExcludingWhere<SolicitudOrdenTrabajo>
+    @param.filter(SolicitudOrdenTrabajo, {exclude: 'where'})
+    filter?: FilterExcludingWhere<SolicitudOrdenTrabajo>,
   ): Promise<SolicitudOrdenTrabajo> {
     return this.solicitudOrdenTrabajoRepository.findById(id, filter);
   }
@@ -143,7 +156,10 @@ export class SolicitudOrdenTrabajoController {
     })
     solicitudOrdenTrabajo: SolicitudOrdenTrabajo,
   ): Promise<void> {
-    await this.solicitudOrdenTrabajoRepository.updateById(id, solicitudOrdenTrabajo);
+    await this.solicitudOrdenTrabajoRepository.updateById(
+      id,
+      solicitudOrdenTrabajo,
+    );
   }
 
   @put('/solicitudes-ordenes-trabajo/{id}', {
@@ -157,7 +173,10 @@ export class SolicitudOrdenTrabajoController {
     @param.path.string('id') id: string,
     @requestBody() solicitudOrdenTrabajo: SolicitudOrdenTrabajo,
   ): Promise<void> {
-    await this.solicitudOrdenTrabajoRepository.replaceById(id, solicitudOrdenTrabajo);
+    await this.solicitudOrdenTrabajoRepository.replaceById(
+      id,
+      solicitudOrdenTrabajo,
+    );
   }
 
   @del('/solicitudes-ordenes-trabajo/{id}', {
