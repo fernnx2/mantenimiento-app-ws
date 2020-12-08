@@ -16,10 +16,10 @@ export class FichaTecnica extends Entity {
   codigoFichaTecnica: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  equipoId: number;
+  equipoId: string;
 
   @property({
     type: 'date',

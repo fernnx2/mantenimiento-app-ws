@@ -1,10 +1,22 @@
+import {LoggingBindings} from '@loopback/extension-logging';
 import {ApplicationConfig, MantenimientoAppWsApplication} from './application';
 export * from './application';
-
 export async function main(options: ApplicationConfig = {}) {
   const app = new MantenimientoAppWsApplication(options);
   await app.boot();
   await app.start();
+  app.configure(LoggingBindings.COMPONENT).to({
+    enableFluent: false,
+    enableHttpAccessLog: true,
+  });
+
+  app.configure(LoggingBindings.FLUENT_SENDER).to({
+    host: process.env.FLUENTD_SERVICE_HOST ?? 'localhost',
+    port: +(process.env.FLUENTD_SERVICE_PORT_TCP ?? 24224),
+    timeout: 3.0,
+    reconnectInterval: 600000, // 10 minutes
+  });
+
   const url = app.restServer.url;
   console.log(`Server is running at ${url}`);
   console.log(`Try ${url}/ping`);

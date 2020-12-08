@@ -1,5 +1,4 @@
 import {Entity, model, property} from '@loopback/repository';
-
 @model()
 export class PlanPem extends Entity {
   @property({
@@ -13,17 +12,6 @@ export class PlanPem extends Entity {
     type: 'string',
   })
   codigoEquipo?: string;
-
-  @property({
-    type: 'string',
-  })
-  codigoInfraestructura?: string;
-
-  @property({
-    type: 'boolean',
-    required: true,
-  })
-  esPlanMantenimientoEquipo: boolean;
 
   @property({
     type: 'string',
@@ -45,13 +33,13 @@ export class PlanPem extends Entity {
 
   @property({
     type: 'string',
-    required: true,
+    defaultFn: 'uuid',
   })
   numeroPem: string;
 
   @property({
     type: 'date',
-    required: true,
+    defaultFn: 'now'
   })
   fechaCreacion: string;
 

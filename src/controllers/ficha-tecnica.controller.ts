@@ -1,4 +1,5 @@
 import {authenticate} from '@loopback/authentication';
+import {logInvocation} from '@loopback/logging';
 import {
   Count,
   CountSchema,
@@ -24,8 +25,10 @@ import {
 import {FichaTecnica} from '../models';
 import {FichaTecnicaRepository} from '../repositories';
 
+
 @authenticate('jwt')
 export class FichaTecnicaController {
+
   constructor(
     @repository(FichaTecnicaRepository)
     public fichaTecnicaRepository: FichaTecnicaRepository,
@@ -151,7 +154,7 @@ export class FichaTecnicaController {
   ): Promise<void> {
     await this.fichaTecnicaRepository.updateById(id, fichaTecnica);
   }
-
+@logInvocation()
   @put('/ficha-tecnicas/{id}', {
     responses: {
       '204': {
