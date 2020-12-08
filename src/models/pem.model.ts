@@ -19,7 +19,19 @@ export class Pem extends Entity {
     type: 'string',
     required: true,
   })
-  codigoEquipo: string;
+  tipoEquipo: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  objetivoProcedimiento: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  descripcionProcedimiento: string;
 
   @property({
     type: 'date',
@@ -49,19 +61,13 @@ export class Pem extends Entity {
     type: 'number',
     required: true,
   })
-  frecuencia: number;
+  frecuenciaEnMeses: number;
 
   @property({
     type: 'string',
     required: true,
   })
-  unidadFrecuencia: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  tipoPem: string;
+  tipoPem: object;
 
   @property({
     type: 'array',
@@ -74,7 +80,7 @@ export class Pem extends Entity {
     type: 'array',
     itemType: 'object',
   })
-  manoObraPem?: object[];
+  manoObra?: object[];
 
   @property({
     type: 'array',
